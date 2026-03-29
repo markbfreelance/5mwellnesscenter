@@ -1,26 +1,296 @@
+/* ─── globals.css ─────────────────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap");
+
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ─── Theme Tokens (replaces tailwind.config.ts) ─── */
+@theme {
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Outfit", system-ui, sans-serif;
+
+  --color-green-50: #f0faf2;
+  --color-green-100: #d8f3dc;
+  --color-green-300: #95d5b2;
+  --color-green-400: #52b788;
+  --color-green-500: #40916c;
+  --color-green-600: #2d6a4f;
+  --color-green-700: #20573c;
+  --color-green-800: #1a4731;
+  --color-green-900: #0d2b1a;
+
+  --color-yellow-50: #fffbeb;
+  --color-yellow-100: #fef3c7;
+  --color-yellow-300: #f4c430;
+  --color-yellow-400: #d4a017;
+  --color-yellow-500: #b8860b;
+  --color-yellow-600: #92660a;
+
+  --color-cream: #f9f8f4;
+  --color-stone: #f4f3ef;
+
+  --animate-marquee: marquee 28s linear infinite;
+  --animate-float: floatY 7s ease-in-out infinite;
+  --animate-float-slow: floatY 11s ease-in-out infinite;
+  --animate-float-slower: floatY 14s ease-in-out infinite;
+  --animate-shimmer: shimmer 5s linear infinite;
+  --animate-pulse-soft: pulse-soft 5s ease-in-out infinite;
+
+  --backdrop-blur-xs: 2px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ─── Keyframes ─── */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
+@keyframes floatY {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+  66% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.12;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes grain {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-1%, -1%);
+  }
+  20% {
+    transform: translate(1%, 1%);
+  }
+  30% {
+    transform: translate(-2%, 0);
+  }
+  40% {
+    transform: translate(2%, -1%);
+  }
+  50% {
+    transform: translate(0, 2%);
+  }
+  60% {
+    transform: translate(-1%, 1%);
+  }
+  70% {
+    transform: translate(1%, -2%);
+  }
+  80% {
+    transform: translate(-2%, 1%);
+  }
+  90% {
+    transform: translate(2%, 0);
+  }
+}
+
+/* ── Root Tokens (for custom CSS classes) ── */
+:root {
+  --green-900: #0d2b1a;
+  --green-800: #1a4731;
+  --green-700: #20573c;
+  --green-600: #2d6a4f;
+  --green-500: #40916c;
+  --green-400: #52b788;
+  --green-300: #95d5b2;
+  --green-100: #d8f3dc;
+  --green-50: #f0faf2;
+  --yellow-600: #92660a;
+  --yellow-500: #b8860b;
+  --yellow-400: #d4a017;
+  --yellow-300: #f4c430;
+  --yellow-100: #fef3c7;
+  --yellow-50: #fffbeb;
+  --cream: #f9f8f4;
+  --stone: #f4f3ef;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Outfit", sans-serif;
+  background: var(--cream);
+  color: var(--green-900);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Display Font ── */
+.font-display {
+  font-family: "Cormorant Garamond", serif;
+}
+
+/* ── Grain Overlay ── */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 0.5s steps(1) infinite;
+}
+
+/* ── Scroll Reveal ── */
+.reveal {
+  opacity: 0;
+  transform: translateY(36px);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.32s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.44s;
+}
+
+/* ── Marquee ── */
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+/* ── Float ── */
+.animate-float {
+  animation: floatY 7s ease-in-out infinite;
+}
+.animate-float-slow {
+  animation: floatY 11s ease-in-out infinite;
+}
+.animate-float-slower {
+  animation: floatY 14s ease-in-out infinite;
+}
+
+/* ── Shimmer ── */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    var(--green-800) 0%,
+    var(--green-500) 40%,
+    var(--yellow-400) 50%,
+    var(--green-500) 60%,
+    var(--green-800) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 5s linear infinite;
+}
+
+/* ── Glass ── */
+.glass {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+.glass-dark {
+  background: rgba(13, 43, 26, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Underline Hover ── */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background: var(--yellow-300);
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ── Botanical SVG pulse ── */
+.pulse-soft {
+  animation: pulse-soft 5s ease-in-out infinite;
+}
+
+/* ── Card lift ── */
+.card-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(13, 43, 26, 0.14);
+}
+
+/* ── Section divider ── */
+.section-divider {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--yellow-300), var(--green-400));
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--green-300);
+  border-radius: 3px;
 }
