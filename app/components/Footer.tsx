@@ -31,22 +31,24 @@ export default function Footer() {
 
         <div className="mt-8 pt-6 border-t border-white/[0.06] flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="text-[0.7rem] text-white/20">
-            © {new Date().getFullYear()} 5M Wellness Center. All rights reserved.
+            © {new Date().getFullYear()} 5M Wellness Center. All rights
+            reserved.
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
             <div className="text-[0.7rem] text-white/20">
-              Powered by Empower Marketing Inc. · DSAP Member
+              Empower Marketing Inc. · DSAP Member
             </div>
             <span className="hidden sm:block text-white/10">|</span>
             <div className="text-[0.7rem] text-white/30">
-              Website by{" "}
+              Powered by{" "}
               <a
-                href="https://orangelab.dev"
+                href="https://orangelabs-neon.vercel.app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#f4c430]/60 hover:text-[#f4c430] transition-colors font-medium"
               >
-                Orange Lab Web Solutions
+                <span style={{ color: "#FF6A00" }}>Orange</span>
+                <span className="text-white/40">Labs Dev.</span>
               </a>
             </div>
           </div>
