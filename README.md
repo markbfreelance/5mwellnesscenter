@@ -84,3 +84,4 @@ npm start
 ## License
 
 This project is private and proprietary. All rights reserved.
+<!-- Vercel Trigger 20260831063339 -->
